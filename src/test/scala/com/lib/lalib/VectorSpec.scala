@@ -57,5 +57,11 @@ class VectorSpec extends Specification {
       val result = testVector.Subtract(newVec)
       result.Equals(expected) mustEqual true
     }
+    "scalar multiplication should return the right vector" in {
+      val scalar = -2
+      val expected = new MVector(List(-2, -4, -6))
+      val result = testVector.ScalarMultiply(scalar)
+      result.Equals(expected) mustEqual true
+    }
   }
 }

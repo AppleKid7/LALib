@@ -27,39 +27,24 @@ class MVector(private var coordinates: List[Double]) {
     val negV = MVector.ScalarMultiply(-1.0, v)
     return Add(negV)
   }
+
+  def ScalarMultiply(s: Double): MVector = {
+    return MVector.ScalarMultiply(s, this)
+  }
 }
 
 object MVector {
   def AddHelper(a: MVector, b: MVector): MVector = {
-    var bLength = b.coordinates.length
-    var aLength = a.coordinates.length
-    var newCoords = List[Double]()
-    var i = 0
-    while(i < aLength){
-      if(i < bLength) {
-        newCoords = newCoords :+ (a.coordinates(i) + b.coordinates(i))
-      } else {
-        newCoords = newCoords :+ a.coordinates(i)
-      }
-      i+=1
-    }
-    while(i < bLength){
-      if(i < aLength) {
-        newCoords = newCoords :+ (a.coordinates(i) + b.coordinates(i))
-      } else {
-        newCoords = newCoords :+ b.coordinates(i)
-      }
-      i+=1
-    }
-    return new MVector(newCoords)
+    val vec1 = a.coordinates
+    val vec2 = b.coordinates
+    val res = vec1.zipAll(vec2, 0.0, 0.0).map { case (a, b) => a.asInstanceOf[Double] + b.asInstanceOf[Double] }
+    return new MVector(res)
   }
 
   def ScalarMultiply(s: Double, a: MVector): MVector = {
-    var newCoords = List[Double]()
-    for(i <- 0 to a.coordinates.length - 1) {
-      newCoords = newCoords :+ a.coordinates(i) * s
-    }
-    return new MVector(newCoords)
+    val vec = a.coordinates
+    val res = vec.map { case a => a.asInstanceOf[Double] * s}
+    return new MVector(res)
   }
 
 }
