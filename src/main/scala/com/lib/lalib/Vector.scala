@@ -39,7 +39,48 @@ class MVector(private var coordinates: List[Double]) {
   }
 
   def Normalize(): MVector = {
-    return ScalarMultiply(1/Magnitude())
+    val scalar: Double = if(Magnitude() != 0) 1/Magnitude() else 0.0
+    return ScalarMultiply(scalar)
+  }
+
+  def Dot(v: MVector): Double = {
+    val vec1 = coordinates
+    val vec2 = v.coordinates
+    val res = vec1.zipAll(vec2, 0.0, 0.0).map { case(a, b) => a.asInstanceOf[Double] * b.asInstanceOf[Double] }
+    return res.sum
+  }
+
+  def Angle(v: MVector, inDegrees: Boolean = false): Double = {
+    val norm = Normalize()
+    val vNorm = v.Normalize()
+    val dotraw = norm.Dot(vNorm)
+    val dot = BigDecimal(dotraw).setScale(5, BigDecimal.RoundingMode.HALF_UP).toDouble
+    if(!inDegrees)
+      return acos(dot)
+    return acos(dot) * (180.0/math.Pi)
+  }
+
+  def isZero(tolerance: Double = 1E-10): Boolean = return Magnitude() < tolerance
+
+  def IsParallel(v: MVector): Boolean = {
+    val angle = Angle(v)
+    val ret = isZero() || v.isZero() || angle == 0 || angle == math.Pi
+    return ret
+  }
+
+  def IsOrthogonal(v: MVector, tolerance: Double = 1E-10): Boolean = {
+    return abs(Dot(v)) < tolerance
+  }
+
+  def ComponentParallelTo(basis: MVector): MVector = {
+    val u = basis.Normalize()
+    val weight = Dot(u)
+    return u.ScalarMultiply(weight)
+  }
+
+  def ComponentOrthogonalTo(basis: MVector): MVector = {
+    val projection = ComponentParallelTo(basis)
+    return Subtract(projection)
   }
 }
 

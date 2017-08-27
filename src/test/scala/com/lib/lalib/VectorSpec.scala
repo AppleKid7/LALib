@@ -100,6 +100,13 @@ class VectorSpec extends Specification {
       result.Equals(expected) mustEqual true
     }
 
+    "zero vector when normalized should remain the same" in {
+      val vec = new MVector(List(0, 0, 0))
+      val expected = new MVector(List(0, 0, 0))
+      val result = vec.Normalize()
+      result.Equals(expected) mustEqual true
+    }
+
     "magnitude exercise 1 must be return the appropriate magnitude" in {
       val vec = new MVector(List(-0.221, 7.437))
       val expected = 7.440282924728065
@@ -127,5 +134,72 @@ class VectorSpec extends Specification {
       val result = vec.Normalize()
       result.Equals(expected) mustEqual true
     }
+
+    "Dot product of test vector with itself must yield the correct number" in {
+      val vec1 = new MVector(List(1, 2, -1))
+      val vec2 = new MVector(List(3, 1, 0))
+      val expected = 5
+      val result = vec1.Dot(vec2)
+      result mustEqual expected
+    }
+
+    "Dot product exercise 1 should yield the correct number" in {
+      val vec1 = new MVector(List(7.887, 4.138))
+      val vec2 = new MVector(List(-8.802, 6.776))
+      val expected = -41.382286
+      val result = vec1.Dot(vec2)
+      result mustEqual expected
+    }
+
+    "Dot product exercise 2 should yield the correct number" in {
+      val vec1 = new MVector(List(-5.955, -4.904, -1.874))
+      val vec2 = new MVector(List(-4.496, -8.755, 7.103))
+      val expected = 56.397178000000004
+      val result = vec1.Dot(vec2)
+      result mustEqual expected
+    }
+    "Angle exercise 1 should yield the correct number" in {
+      val vec1 = new MVector(List(3.183, -7.627))
+      val vec2 = new MVector(List(-2.668, 5.319))
+      val expected = 3.072
+      val result = vec1.Angle(vec2)
+      result - expected < 0.001 mustEqual true
+    }
+
+    "Angle exercise 2 should yield the correct number" in {
+      val vec1 = new MVector(List(7.35, 0.221, 5.188))
+      val vec2 = new MVector(List(2.751, 8.259, 3.985))
+      val expected = 60.276
+      val result = vec1.Angle(vec2, inDegrees = true)
+      result - expected < 0.001 mustEqual true
+    }
+
+    "Exercise 1 is parallel" in {
+      val vec1 = new MVector(List(-7.579, -7.88))
+      val vec2 = new MVector(List(22.737, 23.64))
+      val result1 = vec1.IsParallel(vec2)
+      val result2 = vec1.IsOrthogonal(vec2)
+      result1 mustEqual true
+      result2 mustEqual false
+    }
+
+    "Exercise 2 is neither parallel nor orthogonal" in {
+      val vec1 = new MVector(List(-2.029, 9.97, 4.172))
+      val vec2 = new MVector(List(-9.231, -6.639, -7.245))
+      val result1 = vec1.IsParallel(vec2)
+      val result2 = vec1.IsOrthogonal(vec2)
+      result1 mustEqual false
+      result2 mustEqual false
+    }
+
+    "Exercise 3 is orthogonal" in {
+      val vec1 = new MVector(List(-2.328, -7.284, -1.214))
+      val vec2 = new MVector(List(-1.821, 1.072, -2.94))
+      val result1 = vec1.IsParallel(vec2)
+      val result2 = vec1.IsOrthogonal(vec2)
+      result1 mustEqual false
+      result2 mustEqual true
+    }
+
   }
 }
