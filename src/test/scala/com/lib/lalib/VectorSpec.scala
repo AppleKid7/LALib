@@ -87,5 +87,45 @@ class VectorSpec extends Specification {
       val result = vec.ScalarMultiply(scalar)
       result.Equals(expected) mustEqual true
     }
+
+    "The Magnitude of the test vector shoud be 3.742" in {
+      val expected = 3.7416573867739413
+      val result = testVector.Magnitude()
+      result mustEqual expected
+    }
+
+    "testVector when normalized should be a unit vector" in {
+      val expected = new MVector(List(0.2672612419124244, 0.5345224838248488, 0.8017837257372732))
+      val result = testVector.Normalize()
+      result.Equals(expected) mustEqual true
+    }
+
+    "magnitude exercise 1 must be return the appropriate magnitude" in {
+      val vec = new MVector(List(-0.221, 7.437))
+      val expected = 7.440282924728065
+      val result = vec.Magnitude()
+      result mustEqual expected
+    }
+
+    "magnitude exercise 2 must be return the appropriate magnitude" in {
+      val vec = new MVector(List(8.813, -1.331, -6.247))
+      val expected = 10.884187567292289
+      val result = vec.Magnitude()
+      result mustEqual expected
+    }
+
+    "direction exercise 1 must be return the appropriate normalized vector" in {
+      val vec = new MVector(List(5.581, -2.136))
+      val expected = new MVector(List(0.9339352140866403, -0.35744232526233))
+      val result = vec.Normalize()
+      result.Equals(expected) mustEqual true
+    }
+
+    "direction exercise 1 must be return the appropriate normalized vector" in {
+      val vec = new MVector(List(1.996, 3.108, -4.554))
+      val expected = new MVector(List(0.3404012959433014, 0.5300437012984873, -0.7766470449528029))
+      val result = vec.Normalize()
+      result.Equals(expected) mustEqual true
+    }
   }
 }

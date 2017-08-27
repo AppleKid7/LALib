@@ -1,7 +1,8 @@
 package com.lib.lalib
 
 import scala.collection.immutable.List
-import scala.util.control.Breaks._
+import scala.math._
+
 
 case class MalformedVectorsException(message: String) extends Exception(message)
 
@@ -30,6 +31,15 @@ class MVector(private var coordinates: List[Double]) {
 
   def ScalarMultiply(s: Double): MVector = {
     return MVector.ScalarMultiply(s, this)
+  }
+
+  def Magnitude(): Double = {
+    val res = sqrt(coordinates.map(x => x * x).sum)
+    return res
+  }
+
+  def Normalize(): MVector = {
+    return ScalarMultiply(1/Magnitude())
   }
 }
 
