@@ -63,5 +63,29 @@ class VectorSpec extends Specification {
       val result = testVector.ScalarMultiply(scalar)
       result.Equals(expected) mustEqual true
     }
+
+    "Plus in exercise one should return the appropriate sum" in {
+      val vec1 = new MVector(List(8.218, -9.341))
+      val vec2 = new MVector(List(-1.129, 2.111))
+      val result = vec1.Add(vec2)
+      val expected = new MVector(List(7.089, -7.229999999999999))
+      result.Equals(expected) mustEqual true
+    }
+
+    "Minus in exercise two should return the appropriate subtraction" in {
+      val vec1 = new MVector(List(7.119, 8.215))
+      val vec2 = new MVector(List(-8.223, 0.878))
+      val result = vec1.Subtract(vec2)
+      val expected = new MVector(List(15.342, 7.337))
+      result.Equals(expected) mustEqual true
+    }
+
+    "Scalar multiplication in exercise three should return the appropriate vector" in {
+      val scalar = 7.41
+      val vec = new MVector(List(1.671, -1.012, -0.318))
+      val expected = new MVector(List(12.38211, -7.49892, -2.35638))
+      val result = vec.ScalarMultiply(scalar)
+      result.Equals(expected) mustEqual true
+    }
   }
 }
